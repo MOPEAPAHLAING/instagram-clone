@@ -11,3 +11,5 @@ async function handleImageUpload(image){
     const jsonResponse = await response.json()
     return jsonResponse.url;
 }
+
+export default handleImageUpload

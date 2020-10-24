@@ -178,7 +178,6 @@ function EditUserInfo({ user }) {
     const variables = { id: user.id, profileImage: url };
     await editUserAvatar({ variables });
     setProfileImage(url);
-    console.log({ url });
   }
 
   return (
