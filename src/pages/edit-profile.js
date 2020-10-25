@@ -322,7 +322,7 @@ function SectionItem({ type = "text", text, formItem, inputRef, name, error }) {
   const classes = useEditProfilePageStyles();
 
   return (
-    <div className={classes.setionItemWrapper}>
+    <div className={classes.sectionItemWrapper}>
       <aside
         style={{
           display: "flex",

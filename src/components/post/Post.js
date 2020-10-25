@@ -36,6 +36,7 @@ function Post({ postId }) {
 
   // setTimeout(() => setLoading(false), 2000)
   if (loading) return <PostSkeleton />;
+  console.log({data, loading});
   const {
     id,
     media,
@@ -206,8 +207,8 @@ function LikeButton({ likes, authorId, postId}) {
   const Icon = liked ? UnlikeIcon : LikeIcon;
   const className = liked ? classes.liked : classes.like;
   const onClick = liked ? handleUnlike : handelLike;
-  const {likePost} = useMutation(LIKE_POST)
-  const {unlikePost} = useMutation(UNLIKE_POST)
+  const [likePost] = useMutation(LIKE_POST)
+  const [unlikePost] = useMutation(UNLIKE_POST)
   const variables = {
     postId,
     userId: currentUserId,

@@ -42,7 +42,7 @@ subscription getPost($postId: uuid!) {
     }
     comments(order_by: {created_at: desc, user: {username: asc}}) {
       id
-      constent
+      content
       created_at
       user {
         username
