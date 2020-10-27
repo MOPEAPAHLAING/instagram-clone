@@ -60,9 +60,9 @@ function ProfileTabs({ user, isOwner }) {
             />}
           </Tabs>
         </Hidden>
-            <Hidden smUp>{user.posts.length === 0 && <Divider />}</Hidden>
+            <Hidden smUp>{user.saved_posts.length === 0 && <Divider />}</Hidden>
             {value === 0 && <ProfilePosts user={user} isOwner={isOwner} />}
-            {value === 1 && <SavePosts />}
+            {value === 1 && <SavePosts user={user} />}
       </section>
     </>
   )
@@ -71,7 +71,7 @@ function ProfileTabs({ user, isOwner }) {
 function ProfilePosts({ user, isOwner }){
   const classes= useProfilePageStyles()
 
-  if(user.posts.length === 0){
+  if(user.saved_posts.length === 0){
     return(
       <section className={classes.profilePostsSection}>
         <div className={classes.noContent}>
@@ -95,21 +95,33 @@ function ProfilePosts({ user, isOwner }){
   )
 }
 
-function SavePosts(){
+function SavePosts({user}){
   const classes = useProfilePageStyles()
 
+  if(user.saved_posts.length === 0){
+    return(
+      <section className={classes.savedPostsSection}>
+          <div className={classes.noContent}>
+            <div className={classes.savePhotoIcon} />
+            <Typography variant="h4">
+              Save
+            </Typography>
+            <Typography align="center">
+              Save photos and videos that you want to see again. No one is notified, and only you can see what you've saved.
+            </Typography>
+          </div>
+        </section>
+    )
+  }
+
   return(
-    <section className={classes.savedPostsSection}>
-        <div className={classes.noContent}>
-          <div className={classes.savePhotoIcon} />
-          <Typography variant="h4">
-            Save
-          </Typography>
-          <Typography align="center">
-            Save photos and videos that you want to see again. No one is notified, and only you can see what you've saved.
-          </Typography>
-        </div>
-      </section>
+    <article className={classes.article}>
+      <div className={classes.postContainer}>
+        {user.saved_posts.map(({post}) => (
+          <GridPost key={post.id} post={post} />
+        ))}
+      </div>
+    </article>
   )
 }
 

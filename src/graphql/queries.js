@@ -41,3 +41,47 @@ query serarchUsers($query:String) {
   }
 }
 `;
+
+export const GET_USER_PROFILE = gql`
+query getUserProfile($username: String!) {
+  users(where: {username: {_eq: $username}}) {
+    id
+    name
+    username
+    website
+    bio
+    profile_image
+    posts_aggregate {
+      aggregate {
+        count
+      }
+    }
+    following_aggregate {
+      aggregate {
+        count
+      }
+    }
+    followers_aggregate {
+      aggregate {
+        count
+      }
+    }
+    saved_posts {
+      post {
+        id
+        media
+        likes_aggregate {
+          aggregate {
+            count
+          }
+        }
+        comments_aggregate {
+          aggregate {
+            count
+          }
+        }
+      }
+    }
+  }
+}
+`;
