@@ -1,7 +1,7 @@
-async function handleImageUpload(image){
+async function handleImageUpload(image, uploadPreset = "instagram"){
     const data = new FormData();
     data.append('file', image);
-    data.append('upload_preset', 'instagram');
+    data.append('upload_preset', uploadPreset);
     data.append('cloud_name', 'moepa');
     const response = await fetch('https://api.cloudinary.com/v1_1/moepa/image/upload', {
         method: "POST",

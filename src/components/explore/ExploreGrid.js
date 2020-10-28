@@ -1,14 +1,19 @@
+import { useQuery } from "@apollo/react-hooks";
 import { Typography } from "@material-ui/core";
 import React from "react";
-import { getDefaultPost } from "../../data";
+import { UserContext } from "../../App";
+import { EXPLORE_POSTS } from "../../graphql/queries";
 import { LoadingLargeIcon } from "../../icons";
 import { useExploreGridStyles } from "../../styles";
 import GridPost from "../shared/GridPost";
 
 function ExploreGrid() {
   const classes = useExploreGridStyles();
+  const { followingIds } = React.useContext(UserContext)
+  const variables = {followingIds}
+  const {data, loading} = useQuery(EXPLORE_POSTS, { variables })
 
-  let loading = false;
+  // let loading = false;
 
   return (
     <>
@@ -26,7 +31,7 @@ function ExploreGrid() {
       ) : (
         <article className={classes.article}>
           <div className={classes.postContainer}>
-            {Array.from({ length: 20 }, () => getDefaultPost()).map((post) => (
+            {data.posts.map((post) => (
               <GridPost key={post.id} post={post} />
             ))}
           </div>

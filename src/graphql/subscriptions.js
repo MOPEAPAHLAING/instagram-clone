@@ -8,6 +8,7 @@ subscription Me($userId: String) {
       name
       username
       profile_image
+      created_at
       last_checked
       followers {
         user{

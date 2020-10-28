@@ -5,14 +5,19 @@ import { useFollowSuggestionsStyles } from "../../styles";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { getDefaultUser } from "../../data";
 import { Link } from 'react-router-dom';
 import FollowButton from "./FollowButton";
+import { UserContext } from "../../App";
+import { useQuery } from "@apollo/react-hooks";
+import { SUGGEST_USERS } from "../../graphql/queries";
 
 function FollowSuggestions({ hideHeader }) {
   const classes = useFollowSuggestionsStyles();
+  const { followerIds, me } = React.useContext(UserContext)
+  const variables = { limit: 20, followerIds, createdAt: me.createdAt };
+  const { data, loading } = useQuery(SUGGEST_USERS, { variables })
 
-  let loading = false;
+  // let loading = false;
 
   return (
     <div className={classes.container}>
@@ -38,7 +43,7 @@ function FollowSuggestions({ hideHeader }) {
           slidesToScroll={3}
           easing="ease-in-out"
         >
-          {Array.from({length: 10}, () => getDefaultUser()).map(user => (
+          {data.users.map(user => (
             <FollowSugesstionsItem key={user.id} user={user} />
           ))}
         </Slider>
@@ -49,7 +54,7 @@ function FollowSuggestions({ hideHeader }) {
 
 function FollowSugesstionsItem({ user }){
   const classes = useFollowSuggestionsStyles()
-  const { profile_image, username, name } = user
+  const { profile_image, username, name, id } = user
 
   return(
     <div>
@@ -80,7 +85,7 @@ function FollowSugesstionsItem({ user }){
         >
           {name}
         </Typography>
-        <FollowButton slide={false} />
+        <FollowButton id={id} slide={false} />
       </div>
     </div>
   )
