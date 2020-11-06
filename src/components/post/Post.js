@@ -20,13 +20,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import OptionsDialog from "../shared/OptionsDialog";
-// import { defaultPost } from "../../data";
 import PostSkeleton from "./PostSkeleton";
 import { GET_POST } from "../../graphql/subscriptions";
 import { useMutation, useSubscription } from "@apollo/react-hooks";
 import { UserContext } from "../../App";
 import { LIKE_POST, UNLIKE_POST, SAVE_POST, UNSAVE_POST, CREATE_COMMENT } from "../../graphql/mutations";
 import { formatDateToNowShort, formatPostDate } from "../../utils/formatDate";
+import Img from 'react-graceful-image';
 
 function Post({ postId }) {
   const classes = usePostStyles();
@@ -68,7 +68,7 @@ function Post({ postId }) {
         </div>
         {/* Post Image */}
         <div className={classes.postImage}>
-          <img src={media} alt="Post media" className={classes.image} />
+          <Img src={media} alt="Post media" className={classes.image} />
         </div>
         {/* Post Button */}
         <div className={classes.postButtonsWrapper}>
@@ -112,6 +112,8 @@ function Post({ postId }) {
       </article>
       {showOptionsDialog && (
         <OptionsDialog
+          postId={id}
+          authorId={user.id}
           onClose={() => {
             setOptionsDialog(false);
           }}
