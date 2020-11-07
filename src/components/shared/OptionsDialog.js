@@ -26,7 +26,7 @@ function OptionsDialog({ onClose, authorId, postId }) {
     await deletePost({ variables })
     onClose();
     history.push('/')
-    window.location.reload;
+    window.location.reload();
   }
 
   function handleUnfollowUser(){
